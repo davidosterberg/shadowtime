@@ -25,3 +25,14 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# OS generated files
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Python compiled source code
+*.pyc
+
+# Vim swap files
+*.swp
