@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import matplotlib
+matplotlib.use("TkAgg")
 from pylab import *
 from Tkinter import Frame,Entry,Label,Button,W,SW,E
 from progressmeter import Meter
@@ -146,7 +148,7 @@ class App(Frame):
         clabel(CS, inline=1, fontsize=8)
         xlabel('Location west-east (m)')
         ylabel('Location south-north (m)')
-
+	show()
 
     def worker_thread(self):
         self.S = None
