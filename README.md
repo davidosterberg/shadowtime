@@ -7,6 +7,18 @@ expected in the vicinity of a wind turbine of a certain size given the latitude.
 Many governements require that such a computaion is done and that an entrepreneur wanting to raise a turbine
 shows that a certain threashold number of hours isn't exceeded for the houses in the vicinity of the wind turbine.
 
+## Installation
+Very simple. Just clone the repository: 
+
+    git clone https://github.com/davidosterberg/shadowtime.git
+
+## Usage
+
+The library is called shadow.py
+the GUI is started by issuing
+
+    python2 shadow_gui.py
+
 ## Modeling assumptions
 
 1. The wind turbine is modeled as a solid cylinder.
