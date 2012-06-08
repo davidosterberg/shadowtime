@@ -18,6 +18,6 @@ shows that a certain threashold number of hours isn't exceeded for the houses in
 Never-the-less I don't see why these assumptions wouldn't bee sufficient for many simple cases. For more complicated
 cases there exists commercial codes (e.g., WindPro) that can also output detailed reports.  
 
-## Disclaimber
+## Disclaimer
 I am not at all an expert on this field. So no guarantees :).
 
