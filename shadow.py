@@ -154,27 +154,3 @@ def tower_shadow_map(phi,delta,h,diameter,t,X,Y,progress_queue,cancel_event):
             shadow_time[inside] += 60.
     progress_queue.put(1.0)
     return shadow_time
-
-if False:
-    phi = 15./180*pi
-    delta = 60./180*pi
-    h = 50.
-    width = 2.
-
-    CS = contourf(X, Y, shadow_time/3600.,levels=[0.1,5,10,15,30,40,50,100],cmap=cm.get_cmap(name="gist_heat_r"))
-
-    xlim((-200,200))
-    ylim((-100,150));
-
-    savetxt("shadowtime.txt", shadow_time)
-
-    shadow_time = genfromtxt("shadowtime.txt")
-    contourf(X, Y, shadow_time/3600.,levels=[0.0001,5,10,15,30,40,50,100,1e6],antialiased=True,cmap=cm.get_cmap(name="gist_heat_r"))
-    clim(0,100)
-    colorbar()
-    CS = contour(X, Y, shadow_time/3600.,levels=[0.0001,5,10,15,30,40,50,100],antialiased=True,colors='k')
-    clabel(CS, inline=1, fontsize=8)
-    xlabel('Location west-east (m)')
-    ylabel('Location south-north (m)')
-
-    show()
