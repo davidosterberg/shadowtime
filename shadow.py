@@ -80,7 +80,7 @@ def Earth_Cartesian_to_Geographical(xyz):
     x = xyz[0,0]
     y = xyz[1,0]
     z = xyz[2,0]
-    return arctan(y/x),pi/2-arccos(z/r),r-R
+    return arctan2(y,x),pi/2-arccos(z/r),r-R
 
 def Geographical_to_Universal(phi,delta,h,t):
     """ Transformation from geographic coordinates to coordinates
