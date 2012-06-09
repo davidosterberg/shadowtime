@@ -40,7 +40,7 @@ beta = 2*pi/(1.000017421*365.25*24*3600)  # source wikipedia
 Omega = 2*pi/86164.1
 
 def point_shadow(p):
-    """ Returns the shadow of a point on a sphere. 
+    """ Returns the shadow of a point on a sphere centered in (0,0,0). 
     global variable R is the radius of the sphere an p is the cartesian
     coordinates of the point. """
     global R
