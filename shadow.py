@@ -38,6 +38,7 @@ R=6371e3
 alpha = 23.44/180*pi
 beta = 2*pi/(1.000017421*365.25*24*3600)  # source wikipedia
 Omega = 2*pi/86164.1
+solstice_offset = -10 # winter solstice offset (januari 1) - (december 21) 
 
 def point_shadow(p):
     """ Returns the shadow of a point on a sphere centered in (0,0,0). 
@@ -90,6 +91,8 @@ def Geographical_to_Universal(phi,delta,h,t):
     global alpha
     global beta
     global Omega
+    global solstice_offset
+    t += solstice_offset
     return Rz(-beta*t)*Rx(alpha)*Rz(Omega*t-pi/2)*Geographical_to_Earth_Cartesian(phi,delta,h)
 
 def Universal_to_Geographical(XYZ,t):
@@ -100,6 +103,8 @@ def Universal_to_Geographical(XYZ,t):
     global alpha
     global beta
     global Omega
+    global solstice_offset
+    t += solstice_offset
     xyz = inv(Rz(-beta*t)*Rx(alpha)*Rz(Omega*t-pi/2))*XYZ
     return Earth_Cartesian_to_Geographical(xyz)
 
