@@ -90,7 +90,7 @@ def Geographical_to_Universal(phi,delta,h,t):
     global alpha
     global beta
     global Omega
-    return Rz(-beta*t)*Rx(alpha)*Rz(Omega*t)*Geographical_to_Earth_Cartesian(phi,delta,h)
+    return Rz(-beta*t)*Rx(alpha)*Rz(Omega*t-pi/2)*Geographical_to_Earth_Cartesian(phi,delta,h)
 
 def Universal_to_Geographical(XYZ,t):
     """ Transformation from a coordinate system with origo in the 
@@ -100,7 +100,7 @@ def Universal_to_Geographical(XYZ,t):
     global alpha
     global beta
     global Omega
-    xyz = inv(Rz(-beta*t)*Rx(alpha)*Rz(Omega*t))*XYZ
+    xyz = inv(Rz(-beta*t)*Rx(alpha)*Rz(Omega*t-pi/2))*XYZ
     return Earth_Cartesian_to_Geographical(xyz)
 
 def shadow_box(width,tip_xy):
