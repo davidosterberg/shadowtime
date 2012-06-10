@@ -144,6 +144,7 @@ def tower_shadow_map(phi,delta,h,diameter,t,X,Y,progress_queue,cancel_event):
     surface given by (phi,delta), a tower of height h and of a certain
     diameter, a time vector t (in seconds), return the number of
     seconds the grid points are in shadow by the tower."""
+    global R
     shadow_time = zeros(X.shape)
     for k in range(len(t)):
         if (k % (24*60)) == 0:
