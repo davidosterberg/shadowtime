@@ -159,3 +159,26 @@ def tower_shadow_map(phi,delta,h,diameter,t,X,Y,progress_queue,cancel_event):
             shadow_time[inside] += 60.
     progress_queue.put(1.0)
     return shadow_time
+
+def day_path(phi,delta,h,n):
+    """ Returns the trace of a shadow for a given day """ 
+    global Omega
+    global R
+    global beta
+    t0 = n*2*pi/(Omega+beta)
+    t = arange(t0,t0+24*3600,60)
+    sphis = zeros(len(t))
+    sdeltas = zeros(len(t))
+    for k in range(len(t)):
+        if (k % (24*60)) == 0:
+            sys.stdout.write('.')
+        pXYZ = Geographical_to_Universal(phi,delta,h,t[k])
+        sXYZ = transpose(matrix(point_shadow(array(pXYZ).flatten())))
+        if sXYZ[0,0] != None:
+            sphi,sdelta,sh = Universal_to_Geographical(sXYZ,t[k])
+            sphis[k] = sphi
+            sdeltas[k] = sdelta
+        else:
+            sphis[k] = None
+            sdeltas[k] = None
+    return (sphis-phi)*R*cos(delta),(sdeltas-delta)*R
