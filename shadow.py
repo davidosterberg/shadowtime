@@ -166,7 +166,7 @@ def day_path(phi,delta,h,n):
     global Omega
     global R
     global beta
-    t0 = n*2*pi/(Omega+beta)
+    t0 = n*24*3600
     t = arange(t0,t0+24*3600,60)
     sphis = zeros(len(t))
     sdeltas = zeros(len(t))
