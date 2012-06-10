@@ -183,3 +183,25 @@ def day_path(phi,delta,h,n):
             sphis[k] = None
             sdeltas[k] = None
     return (sphis-phi)*R*cos(delta),(sdeltas-delta)*R
+
+def analemma(phi,delta,h,hour_utc):
+    """ return the shadow analemma for a certain hour (UTC)"""
+    global R
+    t0 = hour_utc*3600
+    t = arange(t0,t0+365*24*3600,24*3600)
+    sphis = zeros(len(t))
+    sdeltas = zeros(len(t))
+
+    for k in range(len(t)):
+        if (k % (24*60)) == 0:
+            sys.stdout.write('.')
+        pXYZ = Geographical_to_Universal(phi,delta,h,t[k])
+        sXYZ = transpose(matrix(point_shadow(array(pXYZ).flatten())))
+        if sXYZ[0,0] != None:
+            sphi,sdelta,sh = Universal_to_Geographical(sXYZ,t[k])
+            sphis[k] = sphi
+            sdeltas[k] = sdelta
+        else:
+            sphis[k] = None
+            sdeltas[k] = None
+    return (sphis-phi)*R*cos(delta),(sdeltas-delta)*R
