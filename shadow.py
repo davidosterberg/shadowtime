@@ -154,7 +154,7 @@ def tower_shadow_map(phi,delta,h,diameter,t,X,Y,progress_queue,cancel_event):
         sXYZ = transpose(matrix(point_shadow(array(pXYZ).flatten())))
         if sXYZ[0,0] != None:
             sphi,sdelta,sh = Universal_to_Geographical(sXYZ,t[k])
-            box = shadow_box(diameter,((sphi-phi)*R,(sdelta-delta)*R))
+            box = shadow_box(diameter,((sphi-phi)*R*cos(delta),(sdelta-delta)*R))
             xyin,inside = points_in_box(X,Y,box)
             shadow_time[inside] += 60.
     progress_queue.put(1.0)
