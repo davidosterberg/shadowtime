@@ -6,7 +6,7 @@ Use this code at your own risk!
 
 ## Usage:
 Just run
->python2 shadow_gui.py
+>python2 flicker_gui.py
 
 
 ## Website:
@@ -36,7 +36,7 @@ from Tkinter import Frame,Entry,Label,Button,W,SW,E
 from progressmeter import Meter
 import Queue
 import threading
-import shadow
+import shadowtime
 
 class App(Frame):
 
