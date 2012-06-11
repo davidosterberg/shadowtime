@@ -175,7 +175,7 @@ def day_path(phi,delta,h,n):
     global R
     global beta
     t0 = n*24*3600
-    t = arange(t0,t0+24*3600,60)
+    t = linspace(t0,t0+24*3600,24*60)
     sphis = zeros(len(t))
     sdeltas = zeros(len(t))
     for k in range(len(t)):
@@ -196,7 +196,7 @@ def analemma(phi,delta,h,hour_utc):
     """ return the shadow analemma for a certain hour (UTC)"""
     global R
     t0 = hour_utc*3600
-    t = arange(t0,t0+365*24*3600,24*3600)
+    t = arange(t0,t0+366*24*3600,24*3600)
     sphis = zeros(len(t))
     sdeltas = zeros(len(t))
 
