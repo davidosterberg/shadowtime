@@ -37,7 +37,7 @@ plot(Tx(0),Ty(0),'ks')
 axis('off')
 
 
-x,y = shadowtime.day_path(phi,delta,h,365)
+x,y = shadowtime.day_path(phi,delta,h,365+shadowtime.solstice_offset)
 x = x/h
 y = y/h
 
@@ -46,7 +46,7 @@ y[x < -4] = None
 x[x > 4] = None
 y[x > 4] = None 
 plot(Tx(x),Ty(y),'k',linewidth=2.0)
-x,y = shadowtime.day_path(phi,delta,h,365/2)
+x,y = shadowtime.day_path(phi,delta,h,365/2+shadowtime.solstice_offset)
 x = x/h
 y = y/h
 
