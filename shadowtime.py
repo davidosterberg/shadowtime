@@ -38,7 +38,7 @@ R=6371e3
 alpha = 23.44/180*pi
 beta = 2*pi/(1.000017421*365.25*24*3600)  # source wikipedia
 Omega = 2*pi/86164.1
-solstice_offset = -10 # winter solstice offset (januari 1) - (december 21) 
+solstice_offset = -10*24*3600 # winter solstice offset (januari 1) - (december 21) 
 
 def point_shadow(p):
     """ Returns the shadow of a point on a sphere centered in (0,0,0). 
@@ -46,9 +46,12 @@ def point_shadow(p):
     coordinates of the point. """
     global R
     c = -array(p).flatten()
-    v = array([0,-1,0])  
-    d = dot(v,c) - (dot(v,c)**2-dot(c,c)+R**2)**0.5
-    if d < 0 or isnan(d):
+    v = array([0,-1,0])
+    xx = dot(v,c)**2-dot(c,c)+R**2
+    if xx < 0:
+        return None
+    d = dot(v,c) - xx**0.5
+    if d < 0:
         return None
     else:
         return p+d*v
@@ -73,6 +76,11 @@ def Geographical_to_Earth_Cartesian(phi,delta,h):
                    [(R+h)*sin(pi/2-delta)*sin(phi)],\
                    [(R+h)*cos(pi/2-delta)]])
 
+
+def orbital_position(t):
+    """ Give the position of earth on the orbit as an angle """
+    return beta*(t + 160000*sin(beta*t))  # TODO: Fix this hack.
+
 def Earth_Cartesian_to_Geographical(xyz):
     """ Transformation from earth locked cartesian coordinates with 
     origo in the earth center into geographic coordinates. """
@@ -93,7 +101,7 @@ def Geographical_to_Universal(phi,delta,h,t):
     global Omega
     global solstice_offset
     t += solstice_offset
-    return Rz(-beta*t)*Rx(alpha)*Rz(Omega*t-pi/2)*Geographical_to_Earth_Cartesian(phi,delta,h)
+    return Rz(-orbital_position(t))*Rx(alpha)*Rz(Omega*t-pi/2)*Geographical_to_Earth_Cartesian(phi,delta,h)
 
 def Universal_to_Geographical(XYZ,t):
     """ Transformation from a coordinate system with origo in the 
@@ -105,7 +113,7 @@ def Universal_to_Geographical(XYZ,t):
     global Omega
     global solstice_offset
     t += solstice_offset
-    xyz = inv(Rz(-beta*t)*Rx(alpha)*Rz(Omega*t-pi/2))*XYZ
+    xyz = inv(Rz(-orbital_position(t))*Rx(alpha)*Rz(Omega*t-pi/2))*XYZ
     return Earth_Cartesian_to_Geographical(xyz)
 
 def shadow_box(width,tip_xy):
