@@ -47,7 +47,7 @@ def point_shadow(p):
     global R
     c = -array(p).flatten()
     v = array([0,-1,0])  
-    d = dot(v,c) - sqrt(dot(v,c)**2-dot(c,c)+R**2)
+    d = dot(v,c) - (dot(v,c)**2-dot(c,c)+R**2)**0.5
     if d < 0 or isnan(d):
         return None
     else:
