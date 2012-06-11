@@ -79,7 +79,7 @@ def Geographical_to_Earth_Cartesian(phi,delta,h):
 
 def orbital_position(t):
     """ Give the position of earth on the orbit as an angle """
-    return beta*(t + 160000*sin(beta*t))  # TODO: Fix this hack.
+    return 2*pi*7.66/(24*60)*sin(beta*t)+beta*t
 
 def Earth_Cartesian_to_Geographical(xyz):
     """ Transformation from earth locked cartesian coordinates with 
