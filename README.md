@@ -1,8 +1,12 @@
 Shadowtime
 ==========
 
-Shadowtime is a program that can calculate and plot the expected annual amount of shadow flicker that can be 
-expected in the vicinity of a wind turbine of a certain size given the latitude.
+Shadowtime is a python module that can calculate where an object on earth will cast its shadow.
+
+The program that can be used for calculating shadow analemmas or to calculate
+and plot the expected annual amount of shadow flicker that can be 
+expected in the vicinity of a wind turbine of a certain size given the
+latitude.
 
 Many governements require that such a computaion is done and that an entrepreneur wanting to raise a turbine
 shows that a certain threashold number of hours isn't exceeded for the houses in the vicinity of the wind turbine.
@@ -14,12 +18,12 @@ Very simple. Just clone the repository:
 
 ## Usage
 
-The library is called shadow.py
-the GUI is started by issuing
+The library is called shadowtime.py. There are a few examples in the examples directory. To execute these you go
 
-    python2 shadow_gui.py
+cd ./examples
+env PYTHONPATH=.. python2 sundial.py
 
-## Modeling assumptions
+## Modeling assumptions for the shadow flicker example
 
 1. The wind turbine is modeled as a solid cylinder.
 2. Earth is assumed to move in a circular orbit around the sun.
