@@ -100,7 +100,7 @@ def Geographical_to_Universal(phi,delta,h,t):
     global beta
     global Omega
     global solstice_offset
-    t += solstice_offset
+    t -= solstice_offset
     return Rz(-orbital_position(t))*Rx(alpha)*Rz(Omega*t-pi/2)*Geographical_to_Earth_Cartesian(phi,delta,h)
 
 def Universal_to_Geographical(XYZ,t):
@@ -112,7 +112,7 @@ def Universal_to_Geographical(XYZ,t):
     global beta
     global Omega
     global solstice_offset
-    t += solstice_offset
+    t -= solstice_offset
     xyz = inv(Rz(-orbital_position(t))*Rx(alpha)*Rz(Omega*t-pi/2))*XYZ
     return Earth_Cartesian_to_Geographical(xyz)
 
