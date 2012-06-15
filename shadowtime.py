@@ -169,6 +169,19 @@ def tower_shadow_map(phi,delta,h,diameter,t,X,Y,progress_queue,cancel_event):
     progress_queue.put(1.0)
     return shadow_time
 
+def shadow(phi,delta,h,t):
+    """ Returns the shadow for a given utc time """ 
+    global Omega
+    global R
+    global beta
+    pXYZ = Geographical_to_Universal(phi,delta,h,t)
+    sXYZ = transpose(matrix(point_shadow(array(pXYZ).flatten())))
+    if sXYZ[0,0] != None:
+        sphi,sdelta,sh = Universal_to_Geographical(sXYZ,t)
+        return (sphi-phi)*R*cos(delta),(sdelta-delta)*R
+    else:
+        return None, None
+
 def day_path(phi,delta,h,n):
     """ Returns the trace of a shadow for a given day """ 
     global Omega
@@ -176,19 +189,13 @@ def day_path(phi,delta,h,n):
     global beta
     t0 = n*24*3600
     t = linspace(t0,t0+24*3600,24*60)
-    sphis = zeros(len(t))
-    sdeltas = zeros(len(t))
+    xs = zeros(len(t))
+    ys = zeros(len(t))
     for k in range(len(t)):
-        pXYZ = Geographical_to_Universal(phi,delta,h,t[k])
-        sXYZ = transpose(matrix(point_shadow(array(pXYZ).flatten())))
-        if sXYZ[0,0] != None:
-            sphi,sdelta,sh = Universal_to_Geographical(sXYZ,t[k])
-            sphis[k] = sphi
-            sdeltas[k] = sdelta
-        else:
-            sphis[k] = None
-            sdeltas[k] = None
-    return (sphis-phi)*R*cos(delta),(sdeltas-delta)*R
+        x,y = shadow(phi,delta,h,t[k])
+        xs[k] = x
+        ys[k] = y
+    return xs,ys
 
 def analemma(phi,delta,h,hour_utc):
     """ return the shadow analemma for a certain hour (UTC)"""
