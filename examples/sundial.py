@@ -14,6 +14,8 @@ ylimits = (-3,10)
 
 def time_label(hour,x,y):
     global h
+    global phi
+    global delta
     xx = x[logical_not(isnan(x))]
     yy = y[logical_not(isnan(x))]
     xx = xx[logical_not(isnan(yy))]
@@ -24,22 +26,36 @@ def time_label(hour,x,y):
         xpos = xx[idxmin]
         ypos = yy[idxmin]
         if hour < 12:
-            text(xpos-0.05,ypos-0.1,str(hour),fontsize=6,\
+            text(xpos-0.05,ypos-0.1,str(hour+2),fontsize=6,\
                 horizontalalignment='left',verticalalignment='top')
         else:
-            text(xpos+0.05,ypos-0.1,str(hour),fontsize=6,\
+            text(xpos+0.05,ypos-0.1,str(hour+2),fontsize=6,\
                 horizontalalignment='right',verticalalignment='top')
     except ValueError:
         pass
 
+    dst_start = (datetime.date(2012,3,28) - datetime.date(2012,1,1)).days
+    xpos,ypos = shadowtime.shadow(phi,delta,h,(dst_start*24+hour)*3600)
+    if xpos and ypos and xpos>xlimits[0] and xpos < xlimits[1]:
+        text(xpos,ypos,str(hour+1),fontsize=6,backgroundcolor='w',\
+            horizontalalignment='center',verticalalignment='center')
+    dst_end = (datetime.date(2012,10,28) - datetime.date(2012,1,1)).days
+    xpos,ypos = shadowtime.shadow(phi,delta,h,(dst_end*24+hour)*3600)
+    if xpos and ypos and xpos>xlimits[0] and xpos < xlimits[1]:
+        text(xpos,ypos,str(hour+1),fontsize=6,backgroundcolor='w',\
+            horizontalalignment='center',verticalalignment='center')
+
+
+
 figure(num=None, figsize=(11.69, 16.54), dpi=400, facecolor='w', edgecolor='k')
 subplot(111, autoscale_on=False,aspect='equal')
-for hour in range(24): 
+
+for hour in range(24):
     x,y = shadowtime.analemma(phi,delta,h,hour)
     x = x/h
     y = y/h
     plot(x,y,'k',linewidth=0.5)
-    time_label(hour+1,x,y)
+    time_label(hour,x,y)
 
 for hour in arange(0,24,0.166666666667): 
     x,y = shadowtime.analemma(phi,delta,h,hour)
@@ -113,15 +129,20 @@ text(0,8.05,"N",fontsize=6,\
 
 
 x,y = shadowtime.analemma(phi,delta,h,12)
-x = x/h
-x = x-mean(x)-0.4
-y = y/h/5.
+x = x/h*0.8
+x = x-mean(x)-0.3
+y = y/h/8.
 y = y-mean(y)
-plot(x,y-1.2,'k')
-text(-0.35,-0.7,"Vinter",fontsize=6,\
+plot(x,y-1.2,'k',linewidth=0.5)
+text(-0.4,-0.8,"Normaltid",fontsize=6,\
      horizontalalignment='center',verticalalignment='bottom')
-text(0.2,-1.2,"Sommar",fontsize=6,\
+text(0.4,-1.2,"Sommartid",fontsize=6,\
      horizontalalignment='center',verticalalignment='bottom')
+dx = -0.08+0.1
+dy = -5.54
+arrowhead = 0.15*array([[0+dx,0+dy],[0.7+dx,0.2+dy],[0.45+dx,0.45+dy]])
+gca().add_patch(Polygon(arrowhead,True,facecolor='k',linewidth=0.5))
+plot([-0.7,0.6],[-1.3,-0.8],'k',linewidth=0.2)
 
 def classical_degree_notation(angle):
     degree = int(angle)
