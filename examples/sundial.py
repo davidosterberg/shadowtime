@@ -5,9 +5,18 @@ import shadowtime
 from pylab import *
 from datetime import date
 
+# Jönköping, Råslättsvägen
 phi = 14.150704/180*pi
 delta = 57.749689/180*pi
 h = 1.
+filename="sundial_jonkoping.pdf"
+
+# Bjärs, Vallstena
+#phi = 18.634923/180*pi
+#delta = 57.625295/180*pi
+#h = 1.
+#filename="sundial_bjers.pdf"
+
 
 xlimits = (-4.8,4.8)
 ylimits = (-3,10)
@@ -128,9 +137,12 @@ text(0,8.05,"N",fontsize=6,\
      horizontalalignment='center',verticalalignment='bottom')
 
 
+# This is some ad-hoc stuff to get a nice looking analemma in the legend
 x,y = shadowtime.analemma(phi,delta,h,12)
+#x = x/h*0.7 # Bjärs
 x = x/h*0.8
 x = x-mean(x)-0.3
+#y = y/h/6.8 # Bjärs
 y = y/h/8.
 y = y-mean(y)
 plot(x,y-1.2,'k',linewidth=0.5)
@@ -165,9 +177,6 @@ def classic_position(lat,lon):
     return s
 
 def description(xpos,ypos):
-    phi = 14.150704/180*pi
-    delta = 57.749689/180*pi
-    h = 1.
 
     R=6371e3
     alpha = 23.44/180*pi
@@ -182,7 +191,6 @@ def description(xpos,ypos):
     s += "Jordaxelns lutning:\n"
     s += "Omloppsperioden:\n"
     s += "Omloppsbanans eccentricitet:\n"
-    s += u"Ingen justering för sommartid har gjorts\n"
     text(xpos,ypos,s,verticalalignment='top',horizontalalignment='left',fontsize=6,color='k')
     s = classic_position(delta*180/pi,phi*180/pi) + "\n"
     s += "+3600 sekunder\n"
@@ -190,7 +198,6 @@ def description(xpos,ypos):
     s += classical_degree_notation(alpha*180/pi)+"\n"
     s += str(2*pi/beta) + " sekunder\n"
     s += str(e) +"\n"
-    s += "\n"
     text(-xpos,ypos,s,verticalalignment='top',horizontalalignment='right',fontsize=6,color='k')
 
 
@@ -200,5 +207,5 @@ xlim(xlimits)
 ylim(ylimits)
 axis('off')
 
-savefig("sundial_jonkoping.pdf",dpi=150)#,bbox_inches='tight')
+savefig(filename,dpi=150)#,bbox_inches='tight')
 #show()
